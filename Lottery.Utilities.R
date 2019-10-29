@@ -6,7 +6,7 @@ Probability_m_k_N=function(m,k,N){
 }
 
 #function 2: return of lottery tickets
-returns=function(k,N,awards,cost_per_ticket){
+returns_=function(k,N,awards,cost_per_ticket){
     vector_index=1:k
     return_per_number=as.numeric(lapply(vector_index,Probability_m_k_N,k=k,N=N))
     return(sum(return_per_number)-cost_per_ticket)
@@ -15,7 +15,7 @@ returns=function(k,N,awards,cost_per_ticket){
 
 #function 3: k numbers from 1:N
 random_k_in_N=function(k,N){
-  random_vector=sample(1:N,k,replace=T)
+  random_vector=sample(1:N,k,replace=F)
   return(random_vector)
 }
 
@@ -32,7 +32,8 @@ total_profit=function(X,k,N,awards,cost_per_ticket){
   mat_x_random=matrix(as.numeric(unlist(x_random)),nrow=X,ncol=k,byrow=T)
   winning_numbers=random_k_in_N(k,N)
   match_win_with_Xs=apply(mat_x_random,MARGIN=1,match_vectors,v1=winning_numbers)
-  sum=apply(match_win_with_Xs,MARGIN=1,sum)
-  total_returns=unlist(lapply(sum,returns,N=N,awards=awards,cost_per_ticket=cost_per_ticket))
-  return(total_returns)
+  #sum=apply(match_win_with_Xs,MARGIN=1,sum)
+  per_ticket=apply(match_win_with_Xs,MARGIN=2,sum)
+  return_per_ticket=lapply(per_ticket,returns_,N=N,awards=awards,cost_per_ticket=cost_per_ticket)
+  return(sum(unlist(return_per_ticket)))
 }
