@@ -17,10 +17,10 @@ if (args=="Normal"){
   cat('\n', 'Using normal awards', '\n')
 
   average_ticket_return=returns_(k,N,awards,cost_per_ticket)
-
   tot_prof_X_tickts=unlist(lapply(X,total_profit,k=k,N=N,awards=awards,cost_per_ticket=cost_per_ticket))
   mean_prof_X_tickts=mean(tot_prof_X_tickts)
   cat('\n', 'The average value of return for 1000 tickets is', mean_prof_X_tickts,'\n')
+  cat('\n', 'The average value of return for a ticket is', average_ticket_return,'\n')
   hist(tot_prof_X_tickts)
 }
 
