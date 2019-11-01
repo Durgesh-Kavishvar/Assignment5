@@ -24,6 +24,7 @@ returns_=function(k,N,awards,cost_per_ticket){
   # this takes Probability_m_k_N function with k and N values as given
   # then this takes a vector from 1:k as values of m and passes through the function Probability_m_k_N 'k' times (similar to using for loops)
   return_per_number=as.numeric(unlist(lapply(vector_index,Probability_m_k_N,k=k,N=N)))  #as.numeric and unlist is used for algaebric operations
+  # for sapply use this : return_per_number=sapply(vector_index,Probability_m_k_N,k=k,N=N)
   # Note: you can use sapply to avoid un-listing !! But i just wanted to try lapply
   return(sum(return_per_number*awards[1:k])-cost_per_ticket) #this returns sum of probabilities*awards and subtracts cost per ticket to give return per ticket
 }
@@ -57,7 +58,7 @@ total_profit=function(X,k,N,awards,cost_per_ticket){
   #' @param cost_per_ticket : cost in $ per ticket
 
   rep_k=rep(k,X) #Replicate k X times for lapply
-  x_random=lapply(rep_k,random_k_in_N,N=N)
+  x_random=lapply(rep_k,random_k_in_N,N=N) # you can create X sets of k random numbers
   mat_x_random=matrix(as.numeric(unlist(x_random)),nrow=X,ncol=k,byrow=T) # create a matrix of size [X x k] where you have X sets of k random numbers (for further application in apply)
   winning_numbers=1:k #set of numbers which we will use as winning numbers, or we can use random numbers too by #random_k_in_N(k,N)
   match_win_with_Xs=apply(mat_x_random,MARGIN=1,match_vectors,v1=winning_numbers) # we have a matrix, we use matching on each row with winning matrix to get a boolean
